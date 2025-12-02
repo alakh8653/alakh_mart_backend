@@ -61,7 +61,6 @@ Notes and Next Steps:
 - After adding DB persistence, update `src/services/authService.js` and the seed script to write to the persistent DB.
 - Consider adding Redis for sessions/caching and a proper logger sink (files, external logging service).
 
-Prisma + Postgres (optional)
 
 1. Start Postgres with Docker Compose:
 
@@ -93,3 +92,31 @@ After migration, the app will use Postgres automatically (Prisma client is prefe
 Env variables (see `.env.example`):
 - `PORT` — server port
 - `JWT_SECRET` — secret used to sign tokens (default: `dev-secret`)
+ 
+Background jobs (Redis + BullMQ)
+
+1. Start Redis together with Postgres:
+
+```bash
+docker-compose up -d
+```
+
+2. Set Redis env vars in `.env` if needed (defaults used):
+
+```
+REDIS_HOST=localhost
+REDIS_PORT=6379
+```
+
+3. Start the worker (in dev):
+
+```bash
+node src/workers/emailWorker.js
+```
+
+4. Enqueue an email job (authenticated):
+
+POST `/jobs/email` with JSON body `{ "to": "user@example.com", "subject": "Hello", "body": "..." }`
+
+The worker logs job processing; replace the worker implementation with a real email provider integration for production.
+

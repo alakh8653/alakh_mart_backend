@@ -6,6 +6,7 @@ const helmet = require('helmet');
 const productsRouter = require('./routes/products');
 const usersRouter = require('./routes/users');
 const authRouter = require('./routes/auth');
+const jobsRouter = require('./routes/jobs');
 const errorHandler = require('./middleware/errorHandler');
 const swagger = require('./docs/swagger');
 
@@ -27,6 +28,7 @@ app.use('/docs', swagger);
 app.use('/auth', authRouter);
 app.use('/products', productsRouter);
 app.use('/users', usersRouter);
+app.use('/jobs', jobsRouter);
 
 app.use((req, res) => res.status(404).json({ error: 'Not found' }));
 
