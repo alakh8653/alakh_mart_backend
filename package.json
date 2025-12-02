@@ -10,6 +10,8 @@
     "prisma:generate": "prisma generate",
     "prisma:migrate:dev": "prisma migrate dev --name init",
     "prisma:studio": "prisma studio",
+    "coverage": "nyc --reporter=lcov --reporter=text npm test",
+    "report-coverage": "npx codecov",
     "lint": "eslint . --ext .js",
     "format": "prettier --write .",
     "test": "jest --runInBand",
@@ -39,6 +41,8 @@
     "nodemon": "^2.0.22",
     "prettier": "^2.8.8",
     "supertest": "^6.3.3",
-    "prisma": "^5.0.0"
+    "prisma": "^5.0.0",
+    "nyc": "^15.1.0",
+    "codecov": "^3.8.0"
   }
 }
