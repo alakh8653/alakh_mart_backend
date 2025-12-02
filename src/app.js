@@ -7,6 +7,7 @@ const productsRouter = require('./routes/products');
 const usersRouter = require('./routes/users');
 const authRouter = require('./routes/auth');
 const jobsRouter = require('./routes/jobs');
+const uploadsRouter = require('./routes/uploads');
 const errorHandler = require('./middleware/errorHandler');
 const swagger = require('./docs/swagger');
 
@@ -29,6 +30,11 @@ app.use('/auth', authRouter);
 app.use('/products', productsRouter);
 app.use('/users', usersRouter);
 app.use('/jobs', jobsRouter);
+app.use('/upload', uploadsRouter);
+
+// serve uploaded files when using local storage
+const path = require('path');
+app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')));
 
 app.use((req, res) => res.status(404).json({ error: 'Not found' }));
 

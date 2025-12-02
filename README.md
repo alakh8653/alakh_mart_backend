@@ -120,3 +120,17 @@ POST `/jobs/email` with JSON body `{ "to": "user@example.com", "subject": "Hello
 
 The worker logs job processing; replace the worker implementation with a real email provider integration for production.
 
+File uploads
+
+- Upload endpoint: `POST /upload` (multipart form, field name `file`). Must be authenticated.
+- Default storage: local filesystem (saved to `uploads/` and served at `/uploads/<filename>`).
+- To use S3, set `STORAGE=s3` and provide `S3_BUCKET` and optional `S3_REGION` in `.env`.
+
+Example using `curl` (local storage):
+
+```
+TOKEN=$(curl -s -X POST http://localhost:3000/auth/login -H "Content-Type: application/json" -d '{"email":"admin@example.com","password":"adminpass"}' | jq -r .token)
+curl -X POST http://localhost:3000/upload -H "Authorization: Bearer $TOKEN" -F "file=@./path/to/file.jpg"
+```
+
+
